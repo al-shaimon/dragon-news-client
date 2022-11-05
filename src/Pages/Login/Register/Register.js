@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const Register = () => {
   const { createUser } = useContext(AuthContext);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -21,9 +22,13 @@ const Register = () => {
         const user = result.user;
         console.log(user);
         form.reset();
+        setError('');
         navigate('/');
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setError(error.message);
+      });
   };
 
   return (
@@ -49,7 +54,7 @@ const Register = () => {
       <Button variant="primary" type="submit">
         Register
       </Button>
-      <Form.Text className="text-danger">We'll never share your email with anyone else.</Form.Text>
+      <Form.Text className="text-danger">{error}</Form.Text>
     </Form>
   );
 };
