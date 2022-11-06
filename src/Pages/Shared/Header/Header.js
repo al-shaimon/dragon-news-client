@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import LeftSideNav from '../LeftSideNav/LeftSideNav';
 
-
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
 
@@ -39,7 +38,7 @@ const Header = () => {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">
+            <>
               {user?.uid ? (
                 <>
                   <span>{user?.displayName}</span>
@@ -53,7 +52,7 @@ const Header = () => {
                   <Link to="/register">Register</Link>
                 </>
               )}
-            </Nav.Link>
+            </>
             <Nav.Link eventKey={2} href="#memes">
               {user?.photoURL ? (
                 <Image style={{ height: '30px' }} roundedCircle src={user?.photoURL}></Image>

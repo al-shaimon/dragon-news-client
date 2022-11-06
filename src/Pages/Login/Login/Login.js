@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, setLoading } = useContext(AuthContext);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,14 +26,16 @@ const Login = () => {
         setError('');
         if (user.emailVerified) {
           navigate(from, { replace: true });
-        }
-        else{
-          toast.error('Your email is not verified. Please verify your email address.')
+        } else {
+          toast.error('Your email is not verified. Please verify your email address.');
         }
       })
       .catch((error) => {
         console.error(error);
         setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
